@@ -189,6 +189,39 @@ export const socialMedia = [
   },
 ];
 
+export const questionPsicologicas = [
+  {
+    id: "question-1",
+    question: "¿Qué puedes decirme sobre ti?",
+    answer:
+      "Me considero una persona muy responsable, comprometida y con ganas de aprender. Me gusta trabajar en equipo y me considero una persona muy sociable. Me gusta mucho la tecnología y me gusta estar al día con las últimas tendencias. Me considero una persona muy responsable, comprometida y con ganas de aprender. Me gusta trabajar en equipo y me considero una persona muy sociable. Me gusta mucho la tecnología y me gusta estar al día con las últimas tendencias.",
+  },
+  {
+    id: "question-2",
+    question: "¿Por qué has elegido este camino profesional?",
+    answer:
+      "Me gusta mucho la tecnología y me gusta estar al día con las últimas tendencias.",
+  },
+  {
+    id: "question-3",
+    question: "¿Cuáles consideras que son tu mayor fortaleza y debilidad?",
+    answer:
+      "Me gusta mucho la tecnología y me gusta estar al día con las últimas tendencias.",
+  },
+  {
+    id: "question-4",
+    question: "¿Cuál es tu proyecto profesional?",
+    answer:
+      "Me gusta mucho la tecnología y me gusta estar al día con las últimas tendencias.",
+  },
+  {
+    id: "question-5",
+    question: "¿Qué te gustaría mejorar de ti mismo?",
+    answer:
+      "Me gusta mucho la tecnología y me gusta estar al día con las últimas tendencias.",
+  },
+];
+
 export const clients = [
   {
     id: "client-1",
