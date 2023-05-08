@@ -102,7 +102,7 @@ function ChatBot() {
 
   return (
     <div className="flex flex-col h-full">
-      <h1 class="mt-1 text-lg font-semibold text-black ">InterviewBuddy</h1>
+      {/* <h1 className="mt-1 text-lg font-semibold text-black ">InterviewBuddy</h1> */}
       <div className="flex-1 overflow-y-auto overflow-auto p-4">
         {conversation.map((message, index) => (
           <div
@@ -135,7 +135,7 @@ function ChatBot() {
           Enviar
         </button>
       </div>
-      <h1 class="mt-4 text-lg font-semibold text-black ">Retroalimentación</h1>
+      {/* <h1 class="mt-4 text-lg font-semibold text-black ">Retroalimentación</h1>
       <div className="flex items-start p-4">
         {feedback === null && (
           <div>
@@ -159,7 +159,7 @@ function ChatBot() {
             </button>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
