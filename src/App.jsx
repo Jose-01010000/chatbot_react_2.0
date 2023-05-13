@@ -15,7 +15,6 @@ import Modal from "./components/modal";
 import Chatbot from "./components/chatbot";
 import React, { useState } from "react";
 import Button from "./components/Button";
-import ChatbotComponent from "./components/chatBotComponent";
 
 const App = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -51,11 +50,7 @@ const App = () => {
           {/* <CTA /> */}
           {/* <Footer /> */}
           <Button styles={`mt-10`} accion={openChat} />
-          <Modal
-            isOpen={isChatOpen}
-            onClose={closeChat}
-            children={<ChatbotComponent />}
-          />
+          <Modal isOpen={isChatOpen} onClose={closeChat} />
         </div>
       </div>
     </div>

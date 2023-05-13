@@ -25,80 +25,31 @@ function ChatBot() {
   //   event.target.value = "";
   // };
 
-  const handleSendMessage = async () => {
-    try {
-      const response = await axios.post("http://localhost:5000/train", {
-        userQuery: message,
-        intent: "welcome",
-        feedback: feedback,
-      });
+  const handleMessageSubmit = (message) => {
+    const data = {
+      message,
+    };
 
-      setConversation([
-        ...conversation,
-        {
-          message,
-          sender: "user",
-        },
-        {
-          message: response.data.message,
-          sender: "bot",
-        },
-      ]);
-      setMessage("");
-      setFeedback(null);
-    } catch (error) {
-      console.error(error);
-    }
+    axios
+      .post("http://localhost:3001/chatbot", data)
+      .then((response) => {
+        const responseData = {
+          text:
+            response.data["message"]["fulfillmentText"] !== ""
+              ? response.data["message"]["fulfillmentText"]
+              : "Sorry, I can't get it. Can you please repeat once?",
+          isBot: true,
+        };
+        setResponses((responses) => [...responses, responseData]);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
   };
 
   const handleFeedback = (feedback) => {
     setFeedback(feedback);
   };
-
-  // useEffect(() => {
-  //   sendMessage("Hola");
-  // }, []);
-
-  // const sendMessage = async (message) => {
-  //   setMessages((prevState) => [
-  //     ...prevState,
-  //     { text: message, sender: "user" },
-  //   ]);
-  //   setInputValue("");
-
-  //   const response = await axios.post(
-  //     `https://dialogflow.googleapis.com/v2/projects/TU_PROYECTO_AGENT_ID/sessions/TU_SESION_DE_CHATBOT:detectIntent`,
-  //     {
-  //       queryInput: {
-  //         text: {
-  //           text: message,
-  //           languageCode: "es-ES",
-  //         },
-  //       },
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${process.env.REACT_APP_DIALOGFLOW_API_KEY}`,
-  //         "Content-Type": "application/json; charset=utf-8",
-  //       },
-  //     }
-  //   );
-
-  //   const responseMessage = response.data.queryResult.fulfillmentText;
-  //   setMessages((prevState) => [
-  //     ...prevState,
-  //     { text: responseMessage, sender: "bot" },
-  //   ]);
-  // };
-
-  // const handleInputValueChange = (event) => {
-  //   setInputValue(event.target.value);
-  // };
-
-  // const handleFormSubmit = (event) => {
-  //   event.preventDefault();
-  //   sendMessage(inputValue);
-  // };
 
   return (
     <div className="flex flex-col h-full">
