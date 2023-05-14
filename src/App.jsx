@@ -29,28 +29,27 @@ const App = () => {
     <div className="bg-primary w-full overflow-hidden">
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
-          <Navbar />
+          <Navbar openChat={openChat} />
         </div>
       </div>
 
-      {/* <div className={`bg-primary ${styles.flexStart}`}>
+      <div className={`bg-primary ${styles.flexStart}`}>
         <div className={`${styles.boxWidth}`}>
           <Hero />
         </div>
-      </div> */}
+      </div>
 
       <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
-          {/* <Stats /> */}
-          {/* <Business openChat={openChat} /> */}
-          {/* <Billing /> */}
+          <Stats />
+          <Business openChat={openChat} />
+          {/* <Billing />   */}
           {/* <CardDeal /> */}
-          {/* <Testimonials /> */}
+          {/* <Testimonials />  */}
           {/* <Clients /> */}
-          {/* <CTA /> */}
-          {/* <Footer /> */}
-          <Button styles={`mt-10`} accion={openChat} />
-          <Modal isOpen={isChatOpen} onClose={closeChat} />
+          <CTA openChat={openChat} />
+          <Footer />
+          {isChatOpen && <Modal isChatOpen={isChatOpen} onClose={closeChat} />}
         </div>
       </div>
     </div>

@@ -1,101 +1,86 @@
-import React, { useState } from "react";
-import { FaMicrophone } from "react-icons/fa";
-import { Transition } from "@headlessui/react";
+import React, { useEffect, useState, forwardRef } from "react";
 import ComponenteCargando from "./Cargando";
 
-const ChatbotComponent = ({
-  preguntasEntrevista,
-  cambiarPregunta,
-  cargando,
-  setCargando,
-  obtenerRespuesta,
-}) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  //   const [answer, setAnswer] = useState("");
-  const [userInput, setUserInput] = useState("");
-  const [answers, setAnswers] = useState([]);
+import { BsQuestionCircle } from "react-icons/bs";
+import { MdOutlineQuestionAnswer } from "react-icons/md";
 
-  // Definimos las preguntas y respuestas del chatbot
+const ChatbotComponent = forwardRef(
+  (
+    {
+      preguntasEntrevista,
+      cargando,
+      setCargando,
+      obtenerRespuesta,
+      numeroPregunta,
+      setNumeroPregunta,
+    },
+    ref
+  ) => {
+    const [userInput, setUserInput] = useState("");
 
-  const handleInputChange = (event) => {
-    setUserInput(event.target.value);
-  };
-
-  // Función que maneja el cambio de pregunta
-  const handleNextQuestion = () => {
-    if (currentQuestion < 5) {
-      console.log(userInput);
-      setCurrentQuestion(currentQuestion + 1);
-      obtenerRespuesta(userInput);
+    useEffect(() => {
       setUserInput("");
-      cambiarPregunta(currentQuestion + 1);
-      setCargando(true);
-    }
-  };
+    }, [numeroPregunta]);
 
-  const handleEnterPress = (event) => {
-    if (event.key === "Enter") {
-      handleNextQuestion();
-    }
-  };
+    // Función que maneja el cambio de pregunta
+    // useEffect(() => {
+    //   handleNextQuestion();
+    // }, []);
 
-  const handleFinish = () => {
-    // console.log(answers);
-  };
+    // const handleNextQuestion = () => {
+    //   if (numeroPregunta < 5 && userInput) {
+    //     console.log("Hola3");
+    //     obtenerRespuesta(userInput && userInput);
+    //     setUserInput("");
+    //     setCargando(true);
+    //   }
+    // };
 
-  return (
-    <div className="p-10 rounded-lg  bg-white">
-      {cargando ? (
-        <ComponenteCargando />
-      ) : (
-        <h2 className="mb-4 text-lg font-bold">
-          {preguntasEntrevista[currentQuestion]?.text}
-        </h2>
-      )}
-      <div className="mb-4">
-        {/* <p>Pregunta {questions[currentQuestion]}:</p> */}
-        <p>¿Cuál es tu respuesta?</p>
-        <textarea
-          className="w-full h-32 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
-          value={userInput}
-          required
-          onChange={handleInputChange}
-          onKeyDown={handleEnterPress}
-        />
+    // const handleEnterPress = (event) => {
+    //   if (event.key === "Enter") {
+    //     handleNextQuestion();
+    //     cambiarPregunta(numeroPregunta + 1);
+    //   }
+    // };
+
+    return (
+      <div>
+        <div className="pt-6 px-6">
+          <div className="flex items-center justify-between">
+            <div className="inline-flex items-center rounded-md text-green-900 bg-green-200">
+              <BsQuestionCircle className="ml-2" />
+              <p className="mx-2 font-poppins">Habilidades blandas</p>
+            </div>
+            <div>
+              <p>{`${numeroPregunta + 1}/5`}</p>
+            </div>
+          </div>
+          {cargando ? (
+            <ComponenteCargando />
+          ) : (
+            <h2 className="mt-1 text-base font-normal font-poppins">
+              {preguntasEntrevista[numeroPregunta]?.text}
+            </h2>
+          )}
+        </div>
+        <div className="flex items-center mt-10 gap-3 font-bold bg-gray-100 border-y border-gray-200 h-16 text-xl">
+          <MdOutlineQuestionAnswer className="ml-6" />
+          <p>Tu respuesta</p>
+        </div>
+        <div className="mb-4 px-6 pt-3">
+          <textarea
+            className="w-full h-56 py-2 text-gray-700 resize-none border-none rounded-lg focus:outline-none focus:shadow-outline"
+            value={userInput}
+            placeholder="¿Cuál es tu respuesta?"
+            required={true}
+            ref={ref}
+            onChange={(e) => setUserInput(e.target.value)}
+            // onKeyDown={handleEnterPress}
+          />
+        </div>
       </div>
-
-      <div className="mb-4 flex items-start p-4">
-        <button
-          type="button"
-          className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-          onClick={handleNextQuestion}
-        >
-          Siguiente pregunta
-        </button>
-        <button
-          type="button"
-          className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mr-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-          onClick={() => setCurrentQuestion(0)}
-        >
-          Reiniciar chatbot
-        </button>
-        <button
-          type="button"
-          className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-          onClick={() => handleFinish()}
-        >
-          Finalizar Chat
-        </button>
-      </div>
-
-      <div className="flex items-center justify-center">
-        <FaMicrophone className="text-gray-400 w-8 h-8 mr-2" />
-        <span className="text-gray-400 text-sm">
-          Haz clic aquí para usar el micrófono
-        </span>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default ChatbotComponent;
