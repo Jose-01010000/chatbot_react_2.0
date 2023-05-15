@@ -13,6 +13,12 @@ const Modal = ({ onClose, isChatOpen }) => {
   const [numeroPregunta, setNumeroPregunta] = useState(0);
   const [cargando, setCargando] = useState(true);
   const [retroalimentacion, setRetroalimentacion] = useState([]);
+  const [datos, setDatos] = useState({
+    preguntas: [],
+    retroalimentacionResp: [],
+  });
+
+  // const resultadosPReguntas
 
   const inputRef = useRef(null);
 
@@ -41,6 +47,7 @@ const Modal = ({ onClose, isChatOpen }) => {
         position: "bottom-right",
       });
     }
+    
     if (valor) {
       setCargando(!cargando);
       let respRetroalimentacion = await obtenerRespuestaDeAPI(
@@ -58,16 +65,6 @@ const Modal = ({ onClose, isChatOpen }) => {
   const IniciarEntrevistas = () => {
     setWelcome(false);
   };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const resp = await obtenerRespuestaDeAPI(
-  //       numeroPregunta < 5 && userAnswer && userAnswer
-  //     );
-  //     setUserAnswers((userAnswerPrev) => [...userAnswerPrev, resp]);
-  //     setCargando(false);
-  //   })();
-  // }, [userAnswer]);
 
   // Reiniciar estados al cerrar modal, para inicar una nueva entrevista.
   const finalizarEntrevista = () => {
@@ -102,7 +99,10 @@ const Modal = ({ onClose, isChatOpen }) => {
             {welcome ? (
               <MensajeBienvenida />
             ) : numeroPregunta === 5 ? (
-              <Retroalimentacion retroalimentacion={retroalimentacion} />
+              <Retroalimentacion
+                retroalimentacion={retroalimentacion}
+                // datos={datos}
+              />
             ) : (
               <ChatbotComponent
                 cargando={cargando}

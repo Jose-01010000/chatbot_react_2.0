@@ -4,13 +4,13 @@ export const obtenerRespuestaDeAPI = async (message) => {
   try {
     const data = { message };
     const response = await axios.post("http://localhost:3001/chatbot", data);
-    const respuestaDeFulfillment = response.data.message.fulfillmentText;
+    const respuestaDeFulfillment = response.data.message;
     const responseData = {
       text:
-        respuestaDeFulfillment !== ""
-          ? respuestaDeFulfillment
+        respuestaDeFulfillment.fulfillmentText !== ""
+          ? respuestaDeFulfillment.fulfillmentText
           : "Lo siento, no lo entendí. ¿Podrías repetirlo, por favor?",
-      isBot: true,
+      intents: respuestaDeFulfillment.action,
     };
     return responseData;
   } catch (error) {

@@ -9,10 +9,7 @@ const ChatbotComponent = forwardRef(
     {
       preguntasEntrevista,
       cargando,
-      setCargando,
-      obtenerRespuesta,
       numeroPregunta,
-      setNumeroPregunta,
     },
     ref
   ) => {

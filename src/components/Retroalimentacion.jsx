@@ -1,7 +1,9 @@
 import React from "react";
 import { MdOutlineFeedback } from "react-icons/md";
 
-const Retroalimentacion = ({ retroalimentacion }) => {
+const Retroalimentacion = ({ retroalimentacion, datos }) => {
+  console.log(datos);
+
   return (
     <div>
       <div className="pt-6 px-6">
