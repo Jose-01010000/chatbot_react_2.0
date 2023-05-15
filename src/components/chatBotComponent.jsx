@@ -22,20 +22,6 @@ const ChatbotComponent = forwardRef(
       setUserInput("");
     }, [numeroPregunta]);
 
-    // Función que maneja el cambio de pregunta
-    // useEffect(() => {
-    //   handleNextQuestion();
-    // }, []);
-
-    // const handleNextQuestion = () => {
-    //   if (numeroPregunta < 5 && userInput) {
-    //     console.log("Hola3");
-    //     obtenerRespuesta(userInput && userInput);
-    //     setUserInput("");
-    //     setCargando(true);
-    //   }
-    // };
-
     // const handleEnterPress = (event) => {
     //   if (event.key === "Enter") {
     //     handleNextQuestion();

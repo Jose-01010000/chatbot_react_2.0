@@ -28,18 +28,6 @@ const Modal = ({ onClose, isChatOpen }) => {
     }
   };
 
-  // const obtenerRetroalimentacion = () => {
-  //   if (userAnswer) {
-  //     let respRetroalimentacion = obtenerRespuestaDeAPI(
-  //       numeroPregunta < 5 && userAnswer && userAnswer
-  //     );
-  //     setUserAnswers((userAnswerPrev) => [
-  //       ...userAnswerPrev,
-  //       respRetroalimentacion,
-  //     ]);
-  //   }
-  // };
-
   const cambiarPregunta = async () => {
     const valor = inputRef.current.value;
     inputRef.current.focus();
