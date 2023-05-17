@@ -11,6 +11,9 @@ export const obtenerRespuestaDeAPI = async (message) => {
           ? respuestaDeFulfillment.fulfillmentText
           : "Lo siento, no lo entendí. ¿Podrías repetirlo, por favor?",
       intents: respuestaDeFulfillment.action,
+      queryText: respuestaDeFulfillment?.queryText ?? "No responde",
+      sentimentAnalysisResult:
+        respuestaDeFulfillment?.sentimentAnalysisResult ?? 0,
     };
     return responseData;
   } catch (error) {

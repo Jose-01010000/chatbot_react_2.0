@@ -13,10 +13,7 @@ const Modal = ({ onClose, isChatOpen }) => {
   const [numeroPregunta, setNumeroPregunta] = useState(0);
   const [cargando, setCargando] = useState(true);
   const [retroalimentacion, setRetroalimentacion] = useState([]);
-  const [datos, setDatos] = useState({
-    preguntas: [],
-    retroalimentacionResp: [],
-  });
+  const [datos, setDatos] = useState([]);
 
   // const resultadosPReguntas
 
@@ -30,14 +27,15 @@ const Modal = ({ onClose, isChatOpen }) => {
     if (!welcome && numeroPregunta < 5) {
       let resPreguntas = await obtenerRespuestaDeAPI(numeroPregunta);
       setCargando(!cargando);
-      setPreguntasEntrevista((respuesta) => [...respuesta, resPreguntas]);
+      setPreguntasEntrevista(resPreguntas);
+      // setPreguntasEntrevista((respuesta) => [...respuesta, resPreguntas]);
     }
   };
 
   const cambiarPregunta = async () => {
     const valor = inputRef.current.value;
     inputRef.current.focus();
-    console.log(valor);
+
     if (!valor) {
       return toast.error("Debes Ingresar tu respuesta", {
         className:
@@ -47,16 +45,26 @@ const Modal = ({ onClose, isChatOpen }) => {
         position: "bottom-right",
       });
     }
-    
+
     if (valor) {
       setCargando(!cargando);
       let respRetroalimentacion = await obtenerRespuestaDeAPI(
         numeroPregunta < 5 && valor && valor
       );
-      setRetroalimentacion((retroalimentacionPrev) => [
-        ...retroalimentacionPrev,
-        respRetroalimentacion,
+      // setRetroalimentacion((retroalimentacionPrev) => [
+      //   ...retroalimentacionPrev,
+      //   respRetroalimentacion,
+      // ]);
+      setRetroalimentacion(respRetroalimentacion);
+
+      setDatos((datosPrev) => [
+        ...datosPrev,
+        {
+          preguntas: preguntasEntrevista,
+          retroalimentacion: respRetroalimentacion,
+        },
       ]);
+
       setCargando(!cargando);
       setNumeroPregunta(numeroPregunta + 1);
     }
@@ -76,6 +84,45 @@ const Modal = ({ onClose, isChatOpen }) => {
     onClose();
   };
 
+  const renderizarChat = () => {
+    if (welcome) {
+      return <MensajeBienvenida />;
+    }
+
+    if (numeroPregunta === 5) {
+      return datos.map((dato, index) => {
+        if (dato.preguntas.text && dato.retroalimentacion.text) {
+          return (
+            <ChatbotComponent
+              retroalimentacion={true}
+              key={index}
+              numeroPregunta={index}
+              preguntasEntrevista={dato.preguntas.text}
+              retroalimentacionRespuestas={dato.retroalimentacion.text}
+              respuestas={dato.retroalimentacion.queryText}
+              sentimiento={
+                dato.retroalimentacion.sentimentAnalysisResult
+                  .queryTextSentiment
+              }
+              cargando={false}
+            />
+          );
+        }
+      });
+    }
+
+    return (
+      <ChatbotComponent
+        cargando={cargando}
+        setCargando={setCargando}
+        numeroPregunta={numeroPregunta}
+        setNumeroPregunta={setNumeroPregunta}
+        preguntasEntrevista={preguntasEntrevista}
+        ref={inputRef}
+      />
+    );
+  };
+
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <Toaster reverseOrder={false} />
@@ -88,31 +135,17 @@ const Modal = ({ onClose, isChatOpen }) => {
           className={`inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full`}
         >
           {/* <!-- Cabecera de la ventana modal --> */}
-          {/* <div className="bg-gray-100 px-4 py-3 border-b border-gray-200 sm:px-6">
+          {numeroPregunta === 5 && (
+            <div className="bg-gray-100 px-4 py-3 border-b border-gray-200 sm:px-6">
               <h4 className="text-lg leading-6 font-medium text-gray-900">
-                InterviewBuddy
+                Retroalimentación
               </h4>
-            </div> */}
+            </div>
+          )}
           {/* <!-- Cuerpo de la ventana modal --> */}
           <div className="">
             {/* <!-- Componente de chatbot --> */}
-            {welcome ? (
-              <MensajeBienvenida />
-            ) : numeroPregunta === 5 ? (
-              <Retroalimentacion
-                retroalimentacion={retroalimentacion}
-                // datos={datos}
-              />
-            ) : (
-              <ChatbotComponent
-                cargando={cargando}
-                setCargando={setCargando}
-                numeroPregunta={numeroPregunta}
-                setNumeroPregunta={setNumeroPregunta}
-                preguntasEntrevista={preguntasEntrevista}
-                ref={inputRef}
-              />
-            )}
+            {renderizarChat()}
           </div>
           {/* <!-- Pie de la ventana modal --> */}
           <div className="flex justify-between bg-gray-100 px-4 py-3 border-t border-gray-200 sm:px-6">
