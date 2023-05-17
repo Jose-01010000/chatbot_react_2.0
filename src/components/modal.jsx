@@ -14,6 +14,7 @@ const Modal = ({ onClose, isChatOpen }) => {
   const [cargando, setCargando] = useState(true);
   const [retroalimentacion, setRetroalimentacion] = useState([]);
   const [datos, setDatos] = useState([]);
+  const [resultado, setResultado] = useState(0);
 
   // const resultadosPReguntas
 
@@ -64,6 +65,10 @@ const Modal = ({ onClose, isChatOpen }) => {
           retroalimentacion: respRetroalimentacion,
         },
       ]);
+      setResultado(
+        resultado +
+          respRetroalimentacion.sentimentAnalysisResult.queryTextSentiment.score
+      );
 
       setCargando(!cargando);
       setNumeroPregunta(numeroPregunta + 1);
@@ -136,9 +141,12 @@ const Modal = ({ onClose, isChatOpen }) => {
         >
           {/* <!-- Cabecera de la ventana modal --> */}
           {numeroPregunta === 5 && (
-            <div className="bg-gray-100 px-4 py-3 border-b border-gray-200 sm:px-6">
+            <div className="flex justify-between bg-gray-100 px-4 py-3 border-b border-gray-200 sm:px-6">
               <h4 className="text-lg leading-6 font-medium text-gray-900">
                 Retroalimentación
+              </h4>
+              <h4 className="text-lg leading-6 font-medium text-gray-900">
+                Resultado: {resultado.toFixed(1) * 100 / 5}%
               </h4>
             </div>
           )}

@@ -2,6 +2,7 @@ import React, { useEffect, useState, forwardRef } from "react";
 import ComponenteCargando from "./Cargando";
 
 import { BsQuestionCircle } from "react-icons/bs";
+import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 
 const ChatbotComponent = forwardRef(
@@ -23,7 +24,6 @@ const ChatbotComponent = forwardRef(
       setUserInput("");
     }, [numeroPregunta]);
 
-    console.log(sentimiento);
     // const handleEnterPress = (event) => {
     //   if (event.key === "Enter") {
     //     handleNextQuestion();
@@ -40,7 +40,10 @@ const ChatbotComponent = forwardRef(
               <p className="mx-2 font-poppins">Habilidades blandas</p>
             </div>
             <div>
-              <p>{`${numeroPregunta + 1}/5`}</p>
+              <p className="font-bold">
+                {`${numeroPregunta + 1}`}
+                <span className="text-gray-500">/5</span>
+              </p>
             </div>
           </div>
           {cargando ? (
@@ -56,18 +59,23 @@ const ChatbotComponent = forwardRef(
         <div className="flex justify-between items-center mt-10 font-bold bg-gray-50 border-y border-gray-200 h-16 text-xl">
           <div className="flex items-center gap-3">
             <MdOutlineQuestionAnswer className="ml-6" />
-            <p className={sentimiento?.score && "text-red-500"}>Tu respuesta</p>
+            <p>Tu respuesta</p>
           </div>
           {sentimiento && (
-            <div className="felx items-center gap-3 mr-6">
-              <p>Puntuación: {Math.round(sentimiento.score * 1000) / 1000}</p>
+            <div
+              className={`flex items-center gap-1 mr-6 ${
+                parseFloat(sentimiento.score).toFixed(1) < 0.5 ? "text-red-500" : "text-green-500"
+              }`}
+            >
+              <VscDebugBreakpointLog />
+              <p>{parseFloat(sentimiento.score).toFixed(1)}</p>
             </div>
           )}
         </div>
         <div className="mb-4 px-6 pt-3">
           {!retroalimentacion ? (
             <textarea
-              className="w-full h-56 py-2 text-gray-700 resize-none border-none rounded-lg focus:outline-none focus:shadow-outline"
+              className="w-full h-32 py-2 text-gray-700 resize-none border-none rounded-lg focus:outline-none focus:shadow-outline"
               value={userInput}
               placeholder="¿Cuál es tu respuesta?"
               required={true}
