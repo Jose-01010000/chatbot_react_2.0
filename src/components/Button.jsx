@@ -1,12 +1,18 @@
 import React from "react";
 
-const Button = ({ styles, accion }) => (
+const Button = ({ styles, accion, margin, titulo }) => (
   <button
     type="button"
-    className={`py-4 px-6 font-concertOne font-medium text-[18px] text-primary bg-dimBlue-100 hover:bg-dimBlue-500 rounded-[10px] outline-none ${styles}`}
+    className={
+      styles
+        ? styles
+        : `py-4 px-6 font-concertOne font-medium text-[18px] text-primary bg-dimBlue-100 hover:bg-dimBlue-500 rounded-[10px] outline-none transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 ${
+            margin && margin
+          }`
+    }
     onClick={() => accion()}
   >
-    Iniciar conversación
+    {titulo ? titulo : "Iniciar entrevista"}
   </button>
 );
 

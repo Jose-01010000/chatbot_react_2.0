@@ -14,6 +14,7 @@ import {
 import Modal from "./components/modal";
 import Chatbot from "./components/chatbot";
 import React, { useState } from "react";
+import Button from "./components/Button";
 
 const App = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -28,7 +29,7 @@ const App = () => {
     <div className="bg-primary w-full overflow-hidden">
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
-          <Navbar />
+          <Navbar openChat={openChat} />
         </div>
       </div>
 
@@ -42,17 +43,13 @@ const App = () => {
         <div className={`${styles.boxWidth}`}>
           <Stats />
           <Business openChat={openChat} />
-          {/* <Billing /> */}
+          {/* <Billing />   */}
           {/* <CardDeal /> */}
-          <Testimonials />
-          <Clients />
-          <CTA />
+          {/* <Testimonials />  */}
+          {/* <Clients /> */}
+          <CTA openChat={openChat} />
           <Footer />
-          <Modal
-            isOpen={isChatOpen}
-            onClose={closeChat}
-            children={<Chatbot />}
-          />
+          {isChatOpen && <Modal isChatOpen={isChatOpen} onClose={closeChat} />}
         </div>
       </div>
     </div>
