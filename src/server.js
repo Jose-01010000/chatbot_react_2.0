@@ -3,7 +3,10 @@ import axios from "axios";
 export const obtenerRespuestaDeAPI = async (message) => {
   try {
     const data = { message };
-    const response = await axios.post("http://localhost:3001/chatbot", data);
+    const response = await axios.post(
+      "https://chatbot-server-dialogflow.up.railway.app/chatbot",
+      data
+    );
     const respuestaDeFulfillment = response.data.message;
     const responseData = {
       text:

@@ -5,6 +5,8 @@ import { BsQuestionCircle } from "react-icons/bs";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 
+import { helpers } from "../constants/index";
+
 const ChatbotComponent = forwardRef(
   (
     {
@@ -39,7 +41,7 @@ const ChatbotComponent = forwardRef(
             <div>
               <p className="font-bold">
                 {`${numeroPregunta + 1}`}
-                <span className="text-gray-500">/9</span>
+                <span className="text-gray-500">/{helpers[0].value}</span>
               </p>
             </div>
           </div>

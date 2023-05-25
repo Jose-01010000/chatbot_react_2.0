@@ -239,6 +239,6 @@ export const clients = [
 export const helpers = [
   {
     id: "numeroPreguntas",
-    value: 9,
+    value: 5,
   },
 ];
