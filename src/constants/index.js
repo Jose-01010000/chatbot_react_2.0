@@ -13,7 +13,6 @@ import {
   perzonalizacion,
   accesibilidad,
   retroalimentacion,
-  user,
 } from "../assets";
 
 export const navLinks = [
@@ -25,10 +24,6 @@ export const navLinks = [
     id: "features",
     title: "Características",
   },
-  // {
-  //   id: "clients",
-  //   title: "Clientes",
-  // },
 ];
 
 export const features = [
@@ -238,5 +233,12 @@ export const clients = [
   {
     id: "client-4",
     logo: dropbox,
+  },
+];
+
+export const helpers = [
+  {
+    id: "numeroPreguntas",
+    value: 5,
   },
 ];
