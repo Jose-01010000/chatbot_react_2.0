@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import MensajeBienvenida from "./MensajeBienvenida";
 import ChatbotComponent from "./chatBotComponent";
-import { obtenerRespuestaDeAPI } from "../server";
-import Retroalimentacion from "./Retroalimentacion";
-import { FaMicrophone } from "react-icons/fa";
 import Button from "./Button";
+
 import toast, { Toaster } from "react-hot-toast";
+import { FaMicrophone } from "react-icons/fa";
+import { obtenerRespuestaDeAPI } from "../server";
+import { helpers } from "../constants/index";
 
 const Modal = ({ onClose, isChatOpen }) => {
   const [welcome, setWelcome] = useState(true);
@@ -16,8 +17,6 @@ const Modal = ({ onClose, isChatOpen }) => {
   const [datos, setDatos] = useState([]);
   const [resultado, setResultado] = useState(0);
 
-  // const resultadosPReguntas
-
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -25,18 +24,16 @@ const Modal = ({ onClose, isChatOpen }) => {
   }, [numeroPregunta, welcome]);
 
   const obtenerPreguntas = async () => {
-    if (!welcome && numeroPregunta < 5) {
+    if (!welcome && numeroPregunta < helpers[0].value) {
       let resPreguntas = await obtenerRespuestaDeAPI(numeroPregunta);
       setCargando(!cargando);
       setPreguntasEntrevista(resPreguntas);
       // setPreguntasEntrevista((respuesta) => [...respuesta, resPreguntas]);
     }
   };
-
   const cambiarPregunta = async () => {
     const valor = inputRef.current.value;
     inputRef.current.focus();
-
     if (!valor) {
       return toast.error("Debes Ingresar tu respuesta", {
         className:
@@ -46,18 +43,12 @@ const Modal = ({ onClose, isChatOpen }) => {
         position: "bottom-right",
       });
     }
-
     if (valor) {
       setCargando(!cargando);
       let respRetroalimentacion = await obtenerRespuestaDeAPI(
-        numeroPregunta < 5 && valor && valor
+        numeroPregunta < helpers[0].value && valor && valor
       );
-      // setRetroalimentacion((retroalimentacionPrev) => [
-      //   ...retroalimentacionPrev,
-      //   respRetroalimentacion,
-      // ]);
       setRetroalimentacion(respRetroalimentacion);
-
       setDatos((datosPrev) => [
         ...datosPrev,
         {
@@ -69,16 +60,13 @@ const Modal = ({ onClose, isChatOpen }) => {
         resultado +
           respRetroalimentacion.sentimentAnalysisResult.queryTextSentiment.score
       );
-
       setCargando(!cargando);
       setNumeroPregunta(numeroPregunta + 1);
     }
   };
-
   const IniciarEntrevistas = () => {
     setWelcome(false);
   };
-
   // Reiniciar estados al cerrar modal, para inicar una nueva entrevista.
   const finalizarEntrevista = () => {
     setWelcome(true);
@@ -88,13 +76,11 @@ const Modal = ({ onClose, isChatOpen }) => {
     setRetroalimentacion([]);
     onClose();
   };
-
   const renderizarChat = () => {
     if (welcome) {
       return <MensajeBienvenida />;
     }
-
-    if (numeroPregunta === 5) {
+    if (numeroPregunta === helpers[0].value) {
       return datos.map((dato, index) => {
         if (dato.preguntas.text && dato.retroalimentacion.text) {
           return (
@@ -115,7 +101,6 @@ const Modal = ({ onClose, isChatOpen }) => {
         }
       });
     }
-
     return (
       <ChatbotComponent
         cargando={cargando}
@@ -127,11 +112,10 @@ const Modal = ({ onClose, isChatOpen }) => {
       />
     );
   };
-
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <Toaster reverseOrder={false} />
-      <div className="flex items-center justify-center max-h-36 pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div className="flex items-center justify-center sm:max-h-36 pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
@@ -140,13 +124,13 @@ const Modal = ({ onClose, isChatOpen }) => {
           className={`inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full`}
         >
           {/* <!-- Cabecera de la ventana modal --> */}
-          {numeroPregunta === 5 && (
+          {numeroPregunta === helpers[0].value && (
             <div className="flex justify-between bg-gray-100 px-4 py-3 border-b border-gray-200 sm:px-6">
               <h4 className="text-lg leading-6 font-medium text-gray-900">
                 Retroalimentación
               </h4>
               <h4 className="text-lg leading-6 font-medium text-gray-900">
-                Resultado: {resultado.toFixed(1) * 100 / 5}%
+                Resultado: {(resultado.toFixed(1) * 100) / 5}%
               </h4>
             </div>
           )}
@@ -167,7 +151,7 @@ const Modal = ({ onClose, isChatOpen }) => {
             {welcome ? (
               <Button accion={IniciarEntrevistas} />
             ) : (
-              numeroPregunta < 5 && (
+              numeroPregunta < helpers[0].value && (
                 <div className="flex gap-5">
                   <div className="flex items-center justify-center cursor-pointer border rounded-md border-dimBlue-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">
                     <FaMicrophone className="text-dimBlue-500 w-12 h-4" />
