@@ -242,3 +242,21 @@ export const helpers = [
     value: 5,
   },
 ];
+
+export const retroalimentacionText = (score) => {
+  let retroalimentacion = "";
+  if (score > 0 && score <= 3) {
+    retroalimentacion =
+      "Tu desempeño en las habilidades blandas es limitado. Te recomendamos trabajar en el desarrollo de estas habilidades para mejorar tu perfil profesional.";
+  } else if (score > 3 && score <= 6) {
+    retroalimentacion =
+      "Has demostrado un nivel intermedio en tus habilidades blandas. Aunque hay margen de mejora, reconocemos tu esfuerzo y animamos a seguir desarrollándolas.";
+  } else if (score > 6 && score <= 9) {
+    retroalimentacion =
+      "Tus habilidades blandas son sólidas y muestran un buen nivel de competencia. Felicitaciones por tu desempeño en esta área.";
+  } else if (score === 10) {
+    retroalimentacion =
+      "¡Tus habilidades blandas son excepcionales! Has demostrado un dominio sobresaliente en esta área, lo cual es muy valioso en el campo de la ingeniería de sistemas.";
+  }
+  return retroalimentacion;
+};

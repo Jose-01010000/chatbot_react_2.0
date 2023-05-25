@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { FaMicrophone } from "react-icons/fa";
 import { obtenerRespuestaDeAPI } from "../server";
 import { helpers } from "../constants/index";
+import Retroalimentacion from "./Retroalimentacion";
 
 const Modal = ({ onClose, isChatOpen }) => {
   const [welcome, setWelcome] = useState(true);
@@ -81,7 +82,7 @@ const Modal = ({ onClose, isChatOpen }) => {
       return <MensajeBienvenida />;
     }
     if (numeroPregunta === helpers[0].value) {
-      return datos.map((dato, index) => {
+      const chatbotComponentMap = datos.map((dato, index) => {
         if (dato.preguntas.text && dato.retroalimentacion.text) {
           return (
             <ChatbotComponent
@@ -100,6 +101,12 @@ const Modal = ({ onClose, isChatOpen }) => {
           );
         }
       });
+      return (
+        <div>
+          {chatbotComponentMap}
+          <Retroalimentacion sentimiento={resultado} />
+        </div>
+      );
     }
     return (
       <ChatbotComponent
@@ -130,7 +137,7 @@ const Modal = ({ onClose, isChatOpen }) => {
                 Retroalimentación
               </h4>
               <h4 className="text-lg leading-6 font-medium text-gray-900">
-                Resultado: {(resultado.toFixed(1) * 100) / 5}%
+                Resultado: {parseFloat(resultado.toFixed(1) * 10) / 0.5}%
               </h4>
             </div>
           )}

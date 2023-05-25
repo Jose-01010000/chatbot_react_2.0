@@ -21,6 +21,8 @@ const ChatbotComponent = forwardRef(
     ref
   ) => {
     const [userInput, setUserInput] = useState("");
+    const [mostrarRetroalimentacion, setMostrarRetroalimentacion] = useState(false);
+
     useEffect(() => {
       setUserInput("");
     }, [numeroPregunta]);
@@ -90,7 +92,7 @@ const ChatbotComponent = forwardRef(
             </p>
           )}
         </div>
-        {retroalimentacion && (
+        {retroalimentacion && mostrarRetroalimentacion && (
           <>
             <div className="flex items-center mt-10 gap-3 font-bold bg-gray-50 border-y border-gray-200 h-16 text-xl">
               <MdOutlineQuestionAnswer className="ml-6" />
