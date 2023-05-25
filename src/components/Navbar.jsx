@@ -1,9 +1,11 @@
 import { useState } from "react";
 
+import Button from "./Button";
+
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
 
-const Navbar = () => {
+const Navbar = ({ openChat }) => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
 
@@ -24,9 +26,12 @@ const Navbar = () => {
           </li>
         ))}
         <li className={`font-concertOne`}>
-          <button className="rounded-md bg-secondary-100 px-3.5 py-2.5 text-sm font-normal text-primary shadow-sm hover:bg-secondary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
-            Comenzar conversación
-          </button>
+          <Button
+            styles={
+              "rounded-md bg-secondary-100 px-3.5 py-2.5 text-sm font-normal text-primary shadow-sm hover:bg-secondary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            }
+            accion={openChat}
+          />
         </li>
       </ul>
 
@@ -55,6 +60,14 @@ const Navbar = () => {
                 <a href={`#${nav.id}`}>{nav.title}</a>
               </li>
             ))}
+            <li className={`font-concertOne mb-4`}>
+              <Button
+                styles={
+                  "rounded-md bg-secondary-100 px-3.5 py-2.5 text-sm font-normal text-primary shadow-sm hover:bg-secondary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                }
+                accion={openChat}
+              />
+            </li>
           </ul>
         </div>
       </div>

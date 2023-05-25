@@ -24,8 +24,7 @@ const FeatureCard = ({ icon, title, content, index }) => (
   </div>
 );
 
-const Business = ({openChat}) => (
-  console.log(openChat),
+const Business = ({ openChat }) => (
   <section id="features" className={layout.section}>
     <div className={layout.sectionInfo}>
       <h2 className={styles.heading2}>
@@ -39,7 +38,7 @@ const Business = ({openChat}) => (
         ideal!
       </p>
 
-      <Button styles={`mt-10`} accion={openChat} />
+      <Button margin={"mt-10"} accion={openChat} />
     </div>
 
     <div className={`${layout.sectionImg} flex-col`}>
