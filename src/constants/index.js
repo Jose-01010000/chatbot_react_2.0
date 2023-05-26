@@ -247,13 +247,13 @@ export const retroalimentacionText = (score) => {
   let retroalimentacion = "";
   if (score > 0 && score <= 3) {
     retroalimentacion =
-      "Tu desempeño en las habilidades blandas es limitado. Te recomendamos trabajar en el desarrollo de estas habilidades para mejorar tu perfil profesional.";
+      "La comunicación fue deficiente y poco clara. Te recomendaría trabajar en mejorar tu comunicación verbal y no verbal. Asegúrate de ser conciso y estructurado al responder las preguntas, evitando respuestas vagas o poco fundamentadas. Necesitas trabajar en tu capacidad para responder preguntas de manera más completa y detallada.";
   } else if (score > 3 && score <= 6) {
     retroalimentacion =
-      "Has demostrado un nivel intermedio en tus habilidades blandas. Aunque hay margen de mejora, reconocemos tu esfuerzo y animamos a seguir desarrollándolas.";
+      "Hubo momentos en los que no te expresaste de manera clara. Trata de ser más conciso/a y estructurado/a en tus respuestas. Tu forma de expresarte mostró cierta falta de confianza. También asegúrate de proporcionar ejemplos concretos y relevantes al responder las preguntas. Esto ayudará a respaldar tus afirmaciones y demostrar tu experiencia.";
   } else if (score > 6 && score <= 9) {
     retroalimentacion =
-      "Tus habilidades blandas son sólidas y muestran un buen nivel de competencia. Felicitaciones por tu desempeño en esta área.";
+      "Tu expresión durante la entrevista es buena y demuestras un nivel adecuado de confianza y claridad al responder. Sigue trabajando en la elaboración de respuestas sólidas y estructuradas. Asegúrate de abordar todos los puntos clave de cada pregunta y utiliza ejemplos para demostrar tus habilidades relevantes para el puesto.";
   } else if (score === 10) {
     retroalimentacion =
       "¡Tus habilidades blandas son excepcionales! Has demostrado un dominio sobresaliente en esta área, lo cual es muy valioso en el campo de la ingeniería de sistemas.";
